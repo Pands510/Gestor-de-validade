@@ -1,0 +1,32 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle de Validade</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.global.min.js"></script>
+
+</head>
+<body>
+
+<h2>Gestor de Validades</h2>
+
+<div class="container">
+
+<div id="form-container">
+<h3>Cadastrar Produto</h3>
+<input type="text" id="produto" placeholder="Nome do Produto">
+<input type="date" id="validade">
+<button onclick="salvarProduto()">Registrar Vencimento</button>
+</div>
+
+<div id="calendar"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>

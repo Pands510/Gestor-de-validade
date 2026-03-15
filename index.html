@@ -1,42 +1,49 @@
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Validade</title>
-
-<link rel="stylesheet" href="style.css">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/locales-all.global.min.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Validade</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 </head>
 <body>
 
-<h2>Gestor de Validades</h2>
+    <header>
+        <h2>Gestor de Validades</h2>
+    </header>
 
-<div class="container">
+    <div class="container">
+        <aside class="sidebar">
+            <div id="form-container" class="card">
+                <h3>Novo Produto</h3>
+                <input type="text" id="produto" placeholder="Nome do Produto">
+                <input type="date" id="validade">
+                <div class="color-picker">
+                    <label>Cor do Marcador:</label>
+                    <input type="color" id="cor-produto" value="#e74c3c">
+                </div>
+                <button onclick="salvarProduto()" class="btn-primary">Registrar Vencimento</button>
+            </div>
 
-    <div id="form-container">
-        <h3>Cadastrar Produto</h3>
-        <input type="text" id="produto" placeholder="Nome do Produto">
-        <input type="date" id="validade">
-        <button onclick="salvarProduto()">Registrar Vencimento</button>
+            <div class="card list-section">
+                <div class="list-header">
+                    <h3>Produtos</h3>
+                    <button onclick="toggleLista()" id="btn-toggle" class="btn-sm">Ocultar</button>
+                </div>
+                
+                <div id="lista-produtos"></div>
 
-        <hr>
+                <div class="list-actions">
+                    <button onclick="selecionarTodos(true)" class="btn-link">Todos</button>
+                    <button onclick="selecionarTodos(false)" class="btn-link">Nenhum</button>
+                    <button onclick="removerSelecionados()" class="btn-danger">Excluir Selecionados</button>
+                </div>
+            </div>
+        </aside>
 
-        <h3>Lista de Produtos</h3>
-        <div id="lista-produtos" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-        </div>
-    
-        <button onclick="selecionarTodos(true)" style="width: 48%; display: inline-block;">Marcar Todos</button>
-        <button onclick="selecionarTodos(false)" style="width: 48%; display: inline-block;">Desmarcar</button>
-        <button onclick="removerSelecionados()" style="background-color: #c0392b; margin-top: 10px;">Remover Selecionados</button>
+        <main class="main-content">
+            <div id="calendar" class="card"></div>
+        </main>
     </div>
 
-<div id="calendar"></div>
-
-</div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>

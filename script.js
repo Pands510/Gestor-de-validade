@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'pt-br',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,dayGridWeek'
+        },
         events: JSON.parse(localStorage.getItem('vencimentos')) || []
     });
     
@@ -16,13 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function salvarProduto() {
     const nome = document.getElementById('produto').value;
     const data = document.getElementById('validade').value;
+    const cor = document.getElementById('cor-produto').value;
 
     if (!nome || !data) return alert("Preencha todos os campos!");
 
     const novoEvento = { 
         title: nome,
         start: data, 
-        color: '#e74c3c' 
+        color: cor 
     };
 
     let eventos = JSON.parse(localStorage.getItem('vencimentos')) || [];
@@ -39,18 +45,15 @@ function salvarProduto() {
 function atualizarLista() {
     const lista = document.getElementById('lista-produtos');
     lista.innerHTML = '';
-
     let eventos = JSON.parse(localStorage.getItem('vencimentos')) || [];
 
     eventos.forEach((evento, index) => {
         const item = document.createElement('div');
-        item.style.marginBottom = "5px";
-        
+        item.className = 'produto-item';
         item.innerHTML = `
-            <label>
-                <input type="checkbox" class="produto-check" data-index="${index}">
-                <strong>${evento.title}</strong> - Vence em: ${evento.start}
-            </label>
+            <input type="checkbox" class="produto-check" data-index="${index}">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: ${evento.color}"></span>
+            <small><strong>${evento.title}</strong> - ${evento.start}</small>
         `;
         lista.appendChild(item);
     });
@@ -61,19 +64,27 @@ function removerSelecionados() {
     const checkboxes = document.querySelectorAll('.produto-check');
     
     let novosEventos = eventos.filter((_, index) => {
-        const checkbox = document.querySelector(`.produto-check[data-index="${index}"]`);
-        return !checkbox.checked;
+        const cb = document.querySelector(`.produto-check[data-index="${index}"]`);
+        return !cb.checked;
     });
 
     localStorage.setItem('vencimentos', JSON.stringify(novosEventos));
-
+    
     calendar.removeAllEvents();
     novosEventos.forEach(e => calendar.addEvent(e));
-
+    
     atualizarLista();
 }
 
 function selecionarTodos(status) {
-    const checkboxes = document.querySelectorAll('.produto-check');
-    checkboxes.forEach(cb => cb.checked = status);
+    document.querySelectorAll('.produto-check').forEach(cb => cb.checked = status);
+}
+
+function toggleLista() {
+    const lista = document.getElementById('lista-produtos');
+    const btn = document.getElementById('btn-toggle');
+    const isHidden = lista.style.display === "none";
+    
+    lista.style.display = isHidden ? "block" : "none";
+    btn.innerText = isHidden ? "Ocultar" : "Ver";
 }

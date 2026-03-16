@@ -1,3 +1,4 @@
+/* Definição de variáveis globais de cores para facilitar a manutenção */
 :root {
     --bg-dark: #121214;
     --bg-card: #18181b;
@@ -20,12 +21,13 @@ header {
     margin-bottom: 30px;
 }
 
+/* Layout flexível: Sidebar à esquerda e Calendário à direita */
 .container {
     display: flex;
     gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Permite quebrar linha em telas pequenas */
 }
 
 .sidebar {
@@ -41,6 +43,7 @@ header {
     min-width: 500px;
 }
 
+/* Estilização dos blocos (cards) */
 .card {
     background: var(--bg-card);
     padding: 20px;
@@ -51,6 +54,7 @@ header {
 
 h3 { margin-top: 0; color: var(--primary); font-size: 1.1rem; }
 
+/* Estilização de inputs e campos de texto */
 input[type="text"], input[type="date"] {
     width: 100%;
     padding: 12px;
@@ -68,6 +72,7 @@ input[type="text"], input[type="date"] {
     margin: 10px 0;
 }
 
+/* Estilização dos botões e efeitos de hover */
 button {
     cursor: pointer;
     transition: filter 0.2s;
@@ -79,6 +84,7 @@ button {
 
 button:hover { filter: brightness(1.2); }
 
+/* Classes utilitárias para cores de botões */
 .btn-primary { background: var(--primary); color: white; width: 100%; }
 .btn-danger { background: var(--danger); color: white; width: 100%; margin-top: 10px; }
 .btn-sm { padding: 4px 8px; font-size: 0.8rem; background: #2e2e33; color: white; }
@@ -98,6 +104,7 @@ button:hover { filter: brightness(1.2); }
     border-bottom: 1px solid var(--border);
 }
 
+/* Customização das cores internas do FullCalendar para combinar com o tema Dark */
 .fc { background: var(--bg-card); padding: 10px; border-radius: 8px; }
 .fc-theme-standard td, .fc-theme-standard th { border: 1px solid var(--border) !important; }
 .fc-day-today { background: rgba(234, 231, 231, 0.1) !important; }

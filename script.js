@@ -20,19 +20,38 @@ document.addEventListener('DOMContentLoaded', function() {
     atualizarLista(); // Atualiza a barra lateral com os itens salvos
 });
 
+function definirCor(dataValidade) {
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0); // Zera as horas para comparar apenas os dias
+    const validade = new Date(dataValidade);
+    validade.setHours(0, 0, 0, 0);
+
+    const diferencaDias = Math.ceil((validade - hoje) / (1000 * 60 * 60 * 24));
+
+    if (diferencaDias < 0) {
+        return "#e74c3c"; // Vermelho: Vencido
+    } else if (diferencaDias <= 7) {
+        return "#f1c40f"; // Amarelo: Vence em até 7 dias
+    } else {
+        return "#2ecc71"; // Verde: Seguro (mais de 7 dias)
+    }
+}
+
 // Função para salvar um novo produto
 function salvarProduto() {
     const nome = document.getElementById('produto').value;
     const data = document.getElementById('validade').value;
-    const cor = document.getElementById('cor-produto').value;
 
     // Validação simples para evitar campos vazios
     if (!nome || !data) return alert("Preencha todos os campos!");
 
+    //Cor gerada automaticamente com base na data selecionada
+    const corAutomatica = definirCor(data);
+
     const novoEvento = { 
         title: nome,
         start: data, 
-        color: cor 
+        color: corAutomatica 
     };
 
     // Recupera a lista atual, adiciona o novo e salva de volta no LocalStorage
@@ -55,6 +74,9 @@ function atualizarLista() {
     let eventos = JSON.parse(localStorage.getItem('vencimentos')) || [];
 
     eventos.forEach((evento, index) => {
+        // Recalcula a cor caso o usuário abra o app em dias diferentes
+        const corAtualizada = definirCor(evento.start);
+
         const item = document.createElement('div');
         item.className = 'produto-item';
         // O data-index é usado para identificar qual item será removido depois
